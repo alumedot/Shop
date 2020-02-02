@@ -1,4 +1,4 @@
-import { IProduct } from './instance';
+import { IProduct } from '../../instance';
 
 
 export interface IReduxStore {
