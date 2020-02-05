@@ -1,13 +1,13 @@
 import PRODUCTS from 'data/dummy-data';
 
-import { IReduxStore } from './types/redux';
+import { IReduxState } from './types/redux';
 
 
-const initialState: IReduxStore = {
+const initialState: IReduxState = {
   availableProducts: PRODUCTS,
   userProducts: PRODUCTS.filter(product => product.ownerId === 'u1'),
 };
 
-export default (state: IReduxStore = initialState, action: any): IReduxStore => {
+export default (state: IReduxState = initialState, action: any): IReduxState => {
   return state;
 };

@@ -2,7 +2,7 @@ import { IProduct } from '../../instance';
 import { ActionTypes } from './ActionTypes';
 
 
-export interface IReduxStore {
+export interface IReduxState {
   items: {
     [key: string]: {
       quantity: number,

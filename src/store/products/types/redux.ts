@@ -1,7 +1,7 @@
 import { IProduct } from '../../instance';
 
 
-export interface IReduxStore {
+export interface IReduxState {
   availableProducts: IProduct[];
   userProducts: IProduct[];
 }

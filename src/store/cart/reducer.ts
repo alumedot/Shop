@@ -1,14 +1,14 @@
 import CartItem from 'models/cartItem';
 
-import { IReduxStore, IAction } from './types/redux';
+import { IReduxState, IAction } from './types/redux';
 import { ActionTypes } from './types/ActionTypes';
 
-const initialState: IReduxStore = {
+const initialState: IReduxState = {
   items: {},
   totalAmount: 0,
 };
 
-export default (state: IReduxStore = initialState, action: IAction): IReduxStore => {
+export default (state: IReduxState = initialState, action: IAction): IReduxState => {
   switch (action.type) {
     case ActionTypes.AddToCart:
       const addedProduct = action.product;

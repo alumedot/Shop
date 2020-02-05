@@ -6,6 +6,7 @@ export enum Colors {
 export enum Screens {
   ProductsOverview = 'ProductsOverview',
   ProductDetail = 'ProductDetail',
+  Cart = 'Cart',
 }
 
 export enum Fonts {
