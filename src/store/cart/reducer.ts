@@ -2,9 +2,11 @@ import CartItem from 'models/cartItem';
 
 import { IAction } from '../types';
 import { ActionTypes as ActionTypesOrders } from '../orders/types/ActionTypes';
+import { ActionTypes as ActionTypesProducts } from '../products/types/ActionTypes';
 
 import { IReduxState } from './types/redux';
 import { ActionTypes } from './types/ActionTypes';
+
 
 const initialState: IReduxState = {
     items: {},
@@ -14,24 +16,22 @@ const initialState: IReduxState = {
 export default (state: IReduxState = initialState, action: IAction): IReduxState => {
     switch (action.type) {
         case ActionTypes.AddToCart: {
-            const addedProduct = action.product;
-            const prodPrice = addedProduct.price;
-            const prodTitle = addedProduct.title;
+            const {id, price, title} = action.product;
 
             return {
                 ...state,
                 items: {
                     ...state.items,
-                    [addedProduct.id]: state.items[addedProduct.id] ?
+                    [id]: state.items[id] ?
                         new CartItem(
-                            state.items[addedProduct.id].quantity + 1,
-                            prodPrice,
-                            prodTitle,
-                            state.items[addedProduct.id].sum + prodPrice,
+                            state.items[id].quantity + 1,
+                            price,
+                            title,
+                            state.items[id].sum + price,
                         ) :
-                        new CartItem(1, prodPrice, prodTitle, prodPrice),
+                        new CartItem(1, price, title, price),
                 },
-                totalAmount: state.totalAmount + prodPrice,
+                totalAmount: state.totalAmount + price,
             };
         }
         case ActionTypes.RemoveFromCart: {
@@ -52,6 +52,19 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
                 ...state,
                 items: updatedCartItems,
                 totalAmount: state.totalAmount - selectedCartItem.price,
+            }
+        }
+        case ActionTypesProducts.DeleteProduct: {
+            const { id } = action;
+            if (!state.items[id]) { return state; }
+
+            const updatedItems = { ...state.items };
+            delete updatedItems[id];
+
+            return {
+                ...state,
+                items: updatedItems,
+                totalAmount: state.totalAmount - state.items[id].sum,
             }
         }
         case ActionTypesOrders.AddOrder: return initialState;

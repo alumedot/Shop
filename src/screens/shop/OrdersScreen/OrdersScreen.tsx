@@ -1,11 +1,10 @@
 import React from 'react';
-import { FlatList, Platform } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 
 import { IRootReduxState } from 'store/types';
-import HeaderButton from 'components/UI/HeaderButton/HeaderButton';
+import HeaderButtonMenu from 'components/UI/HeaderButtonMenu';
 import OrderItem from 'components/shop/OrderItem';
 
 
@@ -30,15 +29,7 @@ const OrderScreen = () => {
 OrderScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
     return {
         headerTitle: 'Your orders',
-        headerLeft: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                <Item
-                    title="Menu"
-                    iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-                    onPress={() => navData.navigation.toggleDrawer()}
-                />
-            </HeaderButtons>
-        ),
+        headerLeft: () => <HeaderButtonMenu navData={navData} />,
     }
 };
 

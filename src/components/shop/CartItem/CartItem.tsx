@@ -14,7 +14,7 @@ const CartItem = (props: IProps) => {
                 <Text style={styles.mainText}>{props.title}</Text>
             </View>
             <View style={styles.itemData}>
-                <Text style={styles.mainText}>{props.sum.toFixed(2)}</Text>
+                <Text style={styles.mainText}>${props.sum.toFixed(2)}</Text>
                 {
                     props.deletable && (
                         <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>

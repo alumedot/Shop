@@ -1,7 +1,10 @@
+import { ReactNode } from 'react';
+
+
 export interface IProps {
   image: string;
   title: string;
   price: number;
-  onViewDetail(): void;
-  onAddToCart(): void;
+  children: ReactNode;
+  onSelect(): void;
 }

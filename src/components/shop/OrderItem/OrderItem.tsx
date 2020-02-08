@@ -24,8 +24,8 @@ const OrderItem = (props: IProps) => {
                 title={showDetails ? "Hide details" : "Show Details"}
                 onPress={() => setShowDetails(prevState => !prevState)}
             />
-            <Collapsible collapsed={!showDetails}>
-                <View>
+            <View style={styles.detailItems}>
+                <Collapsible collapsed={!showDetails}>
                     {props.items.map(item => (
                         <CartItem
                             key={item.id}
@@ -34,8 +34,8 @@ const OrderItem = (props: IProps) => {
                             sum={item.sum}
                         />
                     ))}
-                </View>
-            </Collapsible>
+                </Collapsible>
+            </View>
         </View>
     )
 };
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         ...shadowStyles,
         margin: 20,
         padding: 10,
-        // alignItems: 'center',
+        alignItems: 'center',
     },
     summary: {
         flexDirection: 'row',
@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#888',
     },
-
+    detailItems: {
+        width: '100%',
+    }
 });
 
 export default OrderItem;

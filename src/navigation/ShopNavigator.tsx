@@ -11,11 +11,15 @@ import ProductsOverviewScreen from 'screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from 'screens/shop/ProductDetailScreen';
 import CartScreen from 'screens/shop/CartScreen';
 import OrdersScreen from 'screens/shop/OrdersScreen';
+import UserProductsScreen from 'screens/user/UserProductsScreen';
 
 import { Colors, Fonts } from 'constants';
 
 
 const defaultNavOptions = {
+    cardStyle: {
+        backgroundColor: 'white',
+    },
     headerStyle: {
         backgroundColor: Platform.OS === 'android' ? Colors.Primary : '',
     },
@@ -61,15 +65,26 @@ const OrdersNavigator = createStackNavigator(
     }
 );
 
+const AdminNavigator = createStackNavigator(
+    {
+        UserProducts: UserProductsScreen,
+    },
+    {
+        navigationOptions: navOptions('md-create', 'ios-create'),
+        defaultNavigationOptions: defaultNavOptions,
+    }
+);
+
 const ShopNavigator = createDrawerNavigator(
     {
         Products: ProductsNavigator,
         Orders: OrdersNavigator,
+        Admin: AdminNavigator,
     },
     {
         contentOptions: {
             activeTintColor: Colors.Primary,
-        }
+        },
     }
 );
 

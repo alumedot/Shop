@@ -4,9 +4,13 @@ import { IReduxState as IOrdersReduxState } from './orders/types/redux';
 
 import { IAction as IActionCart } from './cart/types/redux';
 import { IAction as IActionOrders } from './orders/types/redux';
+import { IAction as IActionProducts } from './products/types/redux';
 
 
-export type IAction = IActionCart | IActionOrders;
+export type IAction =
+    IActionCart |
+    IActionOrders |
+    IActionProducts;
 
 export interface IRootReduxState {
   products: IProductsReduxState;

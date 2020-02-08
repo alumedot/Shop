@@ -1,14 +1,15 @@
 import React from 'react';
-import { FlatList, Platform } from 'react-native';
+import { Button, FlatList, Platform } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 
 import { IRootReduxState } from 'store/types';
 
-import { Screens } from 'constants';
+import { Colors, Screens } from 'constants';
 import ProductItem from 'components/shop/ProductItem';
 import HeaderButton from 'components/UI/HeaderButton';
+import HeaderButtonMenu from 'components/UI/HeaderButtonMenu';
 
 import * as cartActions from 'store/cart/actions';
 
@@ -19,6 +20,16 @@ const ProductsOverviewScreen = (props: IProps) => {
     const products = useSelector((state: IRootReduxState) => state.products.availableProducts);
     const dispatch = useDispatch();
 
+    const onSelectItem = (id: string, title: string) => {
+        props.navigation.navigate(
+            Screens.ProductDetail,
+            {
+                productId: id,
+                productTitle: title,
+            }
+        )
+    };
+
     return (
         <FlatList
             data={products}
@@ -28,15 +39,19 @@ const ProductsOverviewScreen = (props: IProps) => {
                     image={itemData.item.imageUrl}
                     title={itemData.item.title}
                     price={itemData.item.price}
-                    onViewDetail={() => props.navigation.navigate(
-                        Screens.ProductDetail,
-                        {
-                            productId: itemData.item.id,
-                            productTitle: itemData.item.title,
-                        }
-                    )}
-                    onAddToCart={() => dispatch(cartActions.addToCart(itemData.item))}
-                />
+                    onSelect={() => onSelectItem(itemData.item.id, itemData.item.title)}
+                >
+                    <Button
+                        color={Colors.Primary}
+                        title="View details"
+                        onPress={() => onSelectItem(itemData.item.id, itemData.item.title)}
+                    />
+                    <Button
+                        color={Colors.Primary}
+                        title="To cart"
+                        onPress={() => dispatch(cartActions.addToCart(itemData.item))}
+                    />
+                </ProductItem>
             )}
         />
     )
@@ -45,15 +60,7 @@ const ProductsOverviewScreen = (props: IProps) => {
 ProductsOverviewScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
     return {
         headerTitle: 'All Products',
-        headerLeft: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                <Item
-                    title="Menu"
-                    iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-                    onPress={() => navData.navigation.toggleDrawer()}
-                />
-            </HeaderButtons>
-        ),
+        headerLeft: () => <HeaderButtonMenu navData={navData} />,
         headerRight: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item
