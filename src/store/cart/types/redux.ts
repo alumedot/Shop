@@ -10,13 +10,18 @@ export interface IReduxState {
       price: number,
       sum: number,
     }
-  },
-  totalAmount: number,
+  };
+  totalAmount: number;
 }
 
 export interface IAddToCart {
-  type: ActionTypes.AddToCart,
-  product: IProduct,
+  type: ActionTypes.AddToCart;
+  product: IProduct;
 }
 
-export type IAction = IAddToCart;
+export interface IRemoveFromCart {
+  type: ActionTypes.RemoveFromCart;
+  id: string;
+}
+
+export type IAction = IAddToCart | IRemoveFromCart;
