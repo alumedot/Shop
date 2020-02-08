@@ -2,5 +2,6 @@ export interface IProps {
   quantity: number;
   title: string;
   sum: number;
-  onRemove(): void;
+  deletable?: boolean;
+  onRemove?(): void;
 }

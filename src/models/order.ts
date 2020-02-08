@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { IOrderItem } from 'store/orders/types/instance';
 
 
@@ -12,6 +14,17 @@ class Order {
         this.items = items;
         this.totalAmount = totalAmount;
         this.date = date;
+    }
+
+    get readableDate() {
+        // return this.date.toLocaleDateString('en-En', {
+        //     year: 'numeric',
+        //     month: 'long',
+        //     day: 'numeric',
+        //     hour: '2-digit',
+        //     minute: '2-digit',
+        // });
+        return moment(this.date).format('MMM Do YYYY, hh:mm')
     }
 }
 

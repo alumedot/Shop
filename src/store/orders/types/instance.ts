@@ -11,4 +11,5 @@ export interface IOrder {
     items: IOrderItem[];
     totalAmount: number;
     date: Date;
+    readableDate: string;
 }
