@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 
 import { Fonts } from 'constants';
-import { shadowStyles } from 'helpers/styles';
+import Card from 'components/UI/Card';
+
 import { IProps } from './types';
 
 
@@ -19,7 +20,7 @@ const ProductItem = (props: IProps) => {
         TouchableNativeFeedback : TouchableOpacity;
 
     return (
-        <View style={styles.product}>
+        <Card style={styles.product}>
             <View style={styles.touchable}>
                 <TouchableComponent useForeground activeOpacity={0.6} onPress={props.onSelect}>
                     <View>
@@ -39,13 +40,12 @@ const ProductItem = (props: IProps) => {
                     </View>
                 </TouchableComponent>
             </View>
-        </View>
+        </Card>
     )
 };
 
 const styles = StyleSheet.create({
     product: {
-        ...shadowStyles,
         height: 300,
         margin: 20,
     },

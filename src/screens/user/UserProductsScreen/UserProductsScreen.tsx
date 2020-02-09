@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FlatList } from 'react-native';
+import { Alert, Button, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 
@@ -22,6 +22,17 @@ const UserProductsScreen = (props: IProps) => {
         props.navigation.navigate(Screens.EditProduct, { productId: id });
     };
 
+    const onDelete = (id: string) => {
+        Alert.alert('Are you sure?', 'Do you really want to delete this item?', [
+            {text: 'Nope', style: 'default'},
+            {
+                text: 'Yep',
+                style: 'destructive',
+                onPress: () => dispatch(actionsProducts.deleteProduct(id))
+            },
+        ])
+    };
+
     return (
         <FlatList
             data={userProducts}
@@ -41,7 +52,7 @@ const UserProductsScreen = (props: IProps) => {
                     <Button
                         color={Colors.Primary}
                         title="Delete"
-                        onPress={() => dispatch(actionsProducts.deleteProduct(itemData.item.id))}
+                        onPress={() => onDelete(itemData.item.id)}
                     />
                 </ProductItem>
             )}

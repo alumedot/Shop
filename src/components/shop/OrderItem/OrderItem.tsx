@@ -3,8 +3,8 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 
 import { Colors, Fonts } from 'constants';
-import { shadowStyles } from 'helpers/styles';
 
+import Card from 'components/UI/Card';
 import CartItem from '../CartItem';
 
 import { IProps } from './types';
@@ -14,7 +14,7 @@ const OrderItem = (props: IProps) => {
     const [showDetails, setShowDetails] = useState(false);
 
     return (
-        <View style={styles.orderItem}>
+        <Card style={styles.orderItem}>
             <View style={styles.summary}>
                 <Text style={styles.amount}>${props.amount.toFixed(2)}</Text>
                 <Text style={styles.date}>{props.date}</Text>
@@ -36,13 +36,12 @@ const OrderItem = (props: IProps) => {
                     ))}
                 </Collapsible>
             </View>
-        </View>
+        </Card>
     )
 };
 
 const styles = StyleSheet.create({
     orderItem: {
-        ...shadowStyles,
         margin: 20,
         padding: 10,
         alignItems: 'center',

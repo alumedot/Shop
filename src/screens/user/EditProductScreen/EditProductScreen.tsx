@@ -29,6 +29,8 @@ const EditProductScreen = (props: IProps) => {
         editedProduct ?
             dispatch(actionsProducts.updateProduct(prodId, title, description, url)) :
             dispatch(actionsProducts.createProduct(title, description, url, +price));
+
+        props.navigation.goBack();
     }, [dispatch, prodId, title, url, price, description]);
 
     useEffect(() => {
