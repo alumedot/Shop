@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         overflow: 'hidden',
-        borderRadius: 10,
         width: '100%',
         height: '60%',
     },
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     },
     details: {
         alignItems: 'center',
-        height: '15%',
+        height: '17%',
         padding: 10,
     },
     title: {
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '25%',
+        height: '23%',
         paddingHorizontal: 20,
     },
 });

@@ -6,14 +6,21 @@ import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { IRootReduxState } from 'store/types';
 import ProductItem from 'components/shop/ProductItem';
 import HeaderButtonMenu from 'components/UI/HeaderButtonMenu';
-import { Colors } from 'constants';
+import HeaderButtonBase from 'components/UI/HeaderButtonBase';
+import { Colors, Screens } from 'constants';
 
 import * as actionsProducts from 'store/products/actions';
 
+import { IProps } from './types';
 
-const UserProductsScreen = () => {
+
+const UserProductsScreen = (props: IProps) => {
     const userProducts = useSelector(({products}: IRootReduxState) => products.userProducts);
     const dispatch = useDispatch();
+
+    const onEditProduct = (id: string) => {
+        props.navigation.navigate(Screens.EditProduct, { productId: id });
+    };
 
     return (
         <FlatList
@@ -24,12 +31,12 @@ const UserProductsScreen = () => {
                     image={itemData.item.imageUrl}
                     title={itemData.item.title}
                     price={itemData.item.price}
-                    onSelect={() => {}}
+                    onSelect={() => onEditProduct(itemData.item.id)}
                 >
                     <Button
                         color={Colors.Primary}
                         title="Edit"
-                        onPress={() => {}}
+                        onPress={() => onEditProduct(itemData.item.id)}
                     />
                     <Button
                         color={Colors.Primary}
@@ -45,7 +52,15 @@ const UserProductsScreen = () => {
 UserProductsScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
     return {
         headerTitle: 'Your products',
-        headerLeft: () => <HeaderButtonMenu navData={navData} />
+        headerLeft: () => <HeaderButtonMenu navData={navData} />,
+        headerRight: () => (
+            <HeaderButtonBase
+                title="Add"
+                iconIos="ios-create"
+                iconAndroid="md-create"
+                onPress={() => navData.navigation.navigate(Screens.EditProduct)}
+            />
+        )
     };
 };
 
