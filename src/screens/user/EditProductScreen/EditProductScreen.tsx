@@ -7,6 +7,7 @@ import { IRootReduxState } from 'store/types';
 
 import { Fonts } from 'constants';
 import HeaderButtonBase from 'components/UI/HeaderButtonBase';
+import Input from 'components/UI/Input';
 
 import * as actionsProducts from 'store/products/actions';
 
@@ -97,51 +98,40 @@ const EditProductScreen = (props: IProps) => {
     return (
         <ScrollView>
             <View style={styles.form}>
-                <View style={styles.formControl}>
-                    <Text style={styles.label}>Title</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={inputValues.title}
-                        onChangeText={text => textChangeHandler(InputIds.Title, text)}
-                        keyboardType="default"
-                        autoCapitalize="sentences"
-                        returnKeyType="next"
-                        onSubmitEditing={() => console.log('Doggy')}
-                        autoCorrect
-                    />
-                    {
-                        !formState.inputValidities.title && <Text>Please enter a valid title</Text>
-                    }
-                </View>
-                <View style={styles.formControl}>
-                    <Text style={styles.label}>Image URL</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={inputValues.url}
-                        onChangeText={text => textChangeHandler(InputIds.Url, text)}
-                    />
-                </View>
+                <Input
+                    label="Title"
+                    errorText="Please enter a valid title"
+                    keyboardType="default"
+                    autoCapitalize="sentences"
+                    returnKeyType="next"
+                    autoCorrect
+                />
+                <Input
+                    label="Image URL"
+                    errorText="Please enter a valid image url"
+                    keyboardType="default"
+                    returnKeyType="next"
+                />
                 {
                     !editedProduct && (
-                        <View style={styles.formControl}>
-                            <Text style={styles.label}>Price</Text>
-                            <TextInput
-                                style={styles.input}
-                                value={inputValues.price ? inputValues.price.toString() : ''}
-                                onChangeText={text => textChangeHandler(InputIds.Price, text)}
-                                keyboardType="decimal-pad"
-                            />
-                        </View>
+                        <Input
+                            label="Price"
+                            errorText="Please enter a valid price"
+                            keyboardType="decimal-pad"
+                            returnKeyType="next"
+                        />
                     )
                 }
-                <View style={styles.formControl}>
-                    <Text style={styles.label}>Description</Text>
-                    <TextInput
-                        style={styles.input}
-                        value={inputValues.description}
-                        onChangeText={text => textChangeHandler(InputIds.Description, text)}
-                    />
-                </View>
+                <Input
+                    label="Description"
+                    errorText="Please enter a valid description"
+                    keyboardType="default"
+                    returnKeyType="next"
+                    autoCapitalize="sentences"
+                    numberOfLines={3}
+                    autoCorrect
+                    multiline
+                />
             </View>
         </ScrollView>
     )
@@ -166,19 +156,6 @@ EditProductScreen.navigationOptions = (navData: NavigationStackScreenProps<IPara
 const styles = StyleSheet.create({
     form: {
         margin: 20,
-    },
-    formControl: {
-        width: '100%',
-    },
-    label: {
-        fontFamily: Fonts.OpenSansBold,
-        marginVertical: 8,
-    },
-    input: {
-        paddingHorizontal: 2,
-        paddingVertical: 5,
-        borderBottomColor: '#ccc',
-        borderBottomWidth: 1,
     },
 });
 
