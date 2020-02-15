@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
 // Redux
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import ReduxThunk from 'redux-thunk';
+
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 
@@ -27,7 +29,12 @@ const rootReducer = combineReducers({
   orders: ordersReducer,
 });
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(
+        applyMiddleware(ReduxThunk),
+    )
+);
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
