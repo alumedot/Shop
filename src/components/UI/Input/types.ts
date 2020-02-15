@@ -1,16 +1,20 @@
 import { TextInputProps } from 'react-native';
 
+import { InputIds } from 'screens/user/EditProductScreen/form';
+
 
 export interface IProps extends TextInputProps {
-    initialValue: string;
-    initiallyValid: boolean;
+    id: InputIds
     label: string;
     errorText: string;
-    required: boolean;
-    email: boolean;
-    min: number;
-    max: number;
-    minLength: number;
+    onInputChange(id: InputIds, value: string, isValid: boolean): void;
+    initialValue?: string;
+    initiallyValid?: boolean;
+    required?: boolean;
+    email?: boolean;
+    min?: number;
+    max?: number;
+    minLength?: number;
 }
 
 export interface IReducerState {
@@ -21,6 +25,7 @@ export interface IReducerState {
 
 export enum Actions {
     InputChange = 'INPUT_CHANGE',
+    InputBlur = 'INPUT_ONBLUR',
 }
 
 export interface IChange {
@@ -29,4 +34,8 @@ export interface IChange {
     isValid: boolean;
 }
 
-export type IAction = IChange;
+export interface IBlur {
+    type: Actions.InputBlur;
+}
+
+export type IAction = IChange | IBlur;

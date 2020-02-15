@@ -1,7 +1,6 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { View, TextInput, Text, StyleSheet } from 'react-native';
-import { InputIds } from 'screens/user/EditProductScreen/form';
-import { Fonts } from 'src/constants';
+import { Fonts } from 'constants';
 
 import { emailRegex } from './constants';
 import { IProps, IReducerState, Actions, IAction } from './types';
@@ -10,7 +9,17 @@ import { IProps, IReducerState, Actions, IAction } from './types';
 const inputReducer = (state: IReducerState, action: IAction) => {
     switch (action.type) {
         case Actions.InputChange: {
-
+            return {
+                ...state,
+                value: action.value,
+                isValid: action.isValid
+            }
+        }
+        case Actions.InputBlur: {
+            return {
+                ...state,
+                touched: true,
+            }
         }
         default: return state;
     }
@@ -19,11 +28,17 @@ const inputReducer = (state: IReducerState, action: IAction) => {
 const Input = (props: IProps) => {
     const [inputState, dispatch] = useReducer(inputReducer, {
         value: props.initialValue || '',
-        isValid: props.initiallyValid,
+        isValid: props.initiallyValid || false,
         touched: false,
     });
 
-    const textChangeHandler = (text) => {
+    const { onInputChange, id } = props;
+
+    useEffect(() => {
+        inputState.touched && onInputChange(id, inputState.value, inputState.isValid);
+    }, [inputState, onInputChange, id]);
+
+    const textChangeHandler = (text: string) => {
         let isValid = true;
         if (props.required && text.trim().length === 0) {
             isValid = false;
@@ -44,17 +59,28 @@ const Input = (props: IProps) => {
         dispatch({ type: Actions.InputChange, value: text, isValid });
     };
 
+    const onLostFocus = () => {
+        dispatch({
+            type: Actions.InputBlur,
+        });
+    };
+
     return (
         <View style={styles.formControl}>
             <Text style={styles.label}>{props.label}</Text>
             <TextInput
                 {...props}
                 style={styles.input}
-                value={inputValues.title}
-                onChangeText={text => textChangeHandler(InputIds.Title, text)}
+                value={inputState.value}
+                onChangeText={textChangeHandler}
+                onBlur={onLostFocus}
             />
             {
-                !formState.inputValidities.title && <Text>{props.errorText}</Text>
+                !inputState.isValid && inputState.touched && (
+                    <View style={styles.errorContainer}>
+                        <Text style={styles.errorText}>{props.errorText}</Text>
+                    </View>
+                )
             }
         </View>
     );
@@ -73,6 +99,14 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         borderBottomColor: '#ccc',
         borderBottomWidth: 1,
+    },
+    errorContainer: {
+        marginVertical: 5,
+    },
+    errorText: {
+        fontFamily: Fonts.OpenSans,
+        color: 'red',
+        fontSize: 14,
     },
 });
 
