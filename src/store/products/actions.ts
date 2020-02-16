@@ -26,7 +26,7 @@ export const productAction = (
 };
 
 export const createProduct = (title: string, description: string, url: string, price: number) => {
-    return productAction(ActionTypes.CreateProduct, title, description, url, price)
+    return productAction(ActionTypes.CreateProduct, title, description, url, price);
 };
 
 export const updateProduct = (id: string, title: string, description: string, url: string) => {

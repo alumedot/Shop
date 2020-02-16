@@ -2,18 +2,24 @@ import React, { useState } from 'react';
 
 // Redux
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import ReduxThunk from 'redux-thunk';
 
+// Expo
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 
+// Reducers
 import productsReducer from './src/store/products/reducer';
 import cartReducer from './src/store/cart/reducer';
 import ordersReducer from './src/store/orders/reducer';
 
+// Navigator
 import ShopNavigator from './src/navigation/ShopNavigator';
+
+// Saga
+import saga from './src/store/rootSaga';
 
 
 const fetchFonts = () => {
@@ -29,12 +35,16 @@ const rootReducer = combineReducers({
   orders: ordersReducer,
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
     rootReducer,
     composeWithDevTools(
-        applyMiddleware(ReduxThunk),
+        applyMiddleware(sagaMiddleware),
     )
 );
+
+sagaMiddleware.run(saga);
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);

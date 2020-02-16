@@ -9,7 +9,7 @@ import Input from 'components/UI/Input';
 
 import * as actionsProducts from 'store/products/actions';
 
-import { IParams, IProps } from './types';
+import { IProps } from './types';
 import { FormActions, IFormAction, IFormState, InputIds } from './form';
 
 
@@ -71,8 +71,9 @@ const EditProductScreen = (props: IProps) => {
         }
 
         const {title, url, price, description} = formState.inputValues;
+        // console.log(actionsProducts.updateProduct(prodId!, title, description, url));
         editedProduct ?
-            dispatch(actionsProducts.updateProduct(prodId, title, description, url)) :
+            dispatch(actionsProducts.updateProduct(prodId!, title, description, url)) :
             dispatch(actionsProducts.createProduct(title, description, url, +price));
 
         props.navigation.goBack();
@@ -159,7 +160,7 @@ const EditProductScreen = (props: IProps) => {
     )
 };
 
-EditProductScreen.navigationOptions = (navData: NavigationStackScreenProps<IParams>) => {
+EditProductScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
     const submitHandler = navData.navigation.getParam('submit');
     return {
         headerTitle: navData.navigation.getParam('productId') ?

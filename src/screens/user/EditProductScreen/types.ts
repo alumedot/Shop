@@ -7,5 +7,5 @@ export interface IParams {
 }
 
 export interface IProps {
-  navigation: NavigationStackProp<{}, IParams>;
+  navigation: NavigationStackProp;
 }

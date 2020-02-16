@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 import { IProduct } from '../../instance';
 import { ActionTypes } from './ActionTypes';
 
@@ -24,6 +26,16 @@ export interface IUpdateProduct extends IProductAction<ActionTypes.UpdateProduct
   id: string;
 }
 
+export interface ICreateProductSucceed {
+  type: ActionTypes.CreateProductSucceed;
+  name: string;
+}
+
+export interface ICreateProductFailed {
+  type: ActionTypes.CreateProductFailed;
+  error: AxiosError;
+}
+
 export interface IDeleteProduct {
   type: ActionTypes.DeleteProduct;
   id: string;
@@ -31,5 +43,6 @@ export interface IDeleteProduct {
 
 export type IAction =
     ICreateProduct |
+    ICreateProductSucceed |
     IUpdateProduct |
     IDeleteProduct;
