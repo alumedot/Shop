@@ -29,7 +29,7 @@ function* createProduct(action: R.ICreateProduct) {
 
 function* getProducts() {
     try {
-        const data: AxiosResponse<FetchResult.IGetProducts> = yield call(api.getProducts);
+        const { data }: AxiosResponse<FetchResult.IGetProducts> = yield call(api.getProducts);
         const loadedProducts = [];
 
         for (const key in data) {

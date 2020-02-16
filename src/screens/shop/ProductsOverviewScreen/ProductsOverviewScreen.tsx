@@ -36,8 +36,6 @@ const ProductsOverviewScreen = (props: IProps) => {
         )
     };
 
-    console.log(isLoading);
-
     if (isLoading) {
         return (
             <View style={styles.centered}>

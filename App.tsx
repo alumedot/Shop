@@ -10,6 +10,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 
+import ErrorHandler from './src/components/helpers/ErrorHandler';
+
 // Reducers
 import productsReducer from './src/store/products/reducer';
 import cartReducer from './src/store/cart/reducer';
@@ -51,7 +53,9 @@ export default function App() {
 
   return fontLoaded ? (
     <Provider store={store}>
-      <ShopNavigator />
+      <ErrorHandler>
+        <ShopNavigator />
+      </ErrorHandler>
     </Provider>
   ) : (
     <AppLoading

@@ -28,6 +28,7 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
                 availableProducts: action.products,
                 userProducts: action.products.filter(product => product.ownerId === 'u1'),
                 isLoading: false,
+                error: null,
             };
         }
         case ActionTypes.GetProductsFailed: {

@@ -71,7 +71,6 @@ const EditProductScreen = (props: IProps) => {
         }
 
         const {title, url, price, description} = formState.inputValues;
-        // console.log(actionsProducts.updateProduct(prodId!, title, description, url));
         editedProduct ?
             dispatch(actionsProducts.updateProduct(prodId!, title, description, url)) :
             dispatch(actionsProducts.createProduct(title, description, url, +price));
