@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, FlatList, Platform } from 'react-native';
+import { View, Text, Button, FlatList, Platform, ActivityIndicator, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
@@ -18,7 +18,8 @@ import { IProps } from './types';
 
 
 const ProductsOverviewScreen = (props: IProps) => {
-    const products = useSelector((state: IRootReduxState) => state.products.availableProducts);
+    const products = useSelector(({ products }: IRootReduxState) => products.availableProducts);
+    const isLoading = useSelector(({products}: IRootReduxState) => products.isLoading);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -34,6 +35,24 @@ const ProductsOverviewScreen = (props: IProps) => {
             }
         )
     };
+
+    console.log(isLoading);
+
+    if (isLoading) {
+        return (
+            <View style={styles.centered}>
+                <ActivityIndicator size="large" color={Colors.Primary} />
+            </View>
+        )
+    }
+
+    if (!isLoading && !products.length) {
+        return (
+            <View style={styles.centered}>
+                <Text>No products found. Maybe start adding some!</Text>
+            </View>
+        );
+    }
 
     return (
         <FlatList
@@ -77,5 +96,13 @@ ProductsOverviewScreen.navigationOptions = (navData: NavigationStackScreenProps)
         ),
     }
 };
+
+const styles = StyleSheet.create({
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+});
 
 export default ProductsOverviewScreen;

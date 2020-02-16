@@ -18,6 +18,6 @@ export default {
     },
 
     async getProducts() {
-        return await axios.get(url + 'products.json');
+        return await axios.get(url + 'products.jon');
     }
 }

@@ -7,6 +7,8 @@ import { ActionTypes } from './ActionTypes';
 export interface IReduxState {
   availableProducts: IProduct[];
   userProducts: IProduct[];
+  isLoading: boolean;
+  error: AxiosError | null;
 }
 
 export interface IProductData {
@@ -36,6 +38,10 @@ export interface ICreateProductFailed {
   error: AxiosError;
 }
 
+export interface IGetProducts {
+  type: ActionTypes.GetProducts;
+}
+
 export interface IGetProductsSucceed {
   type: ActionTypes.GetProductsSucceed;
   products: IProduct[];
@@ -54,6 +60,8 @@ export interface IDeleteProduct {
 export type IAction =
     ICreateProduct |
     ICreateProductSucceed |
+    IGetProducts |
     IGetProductsSucceed |
+    IGetProductsFailed |
     IUpdateProduct |
     IDeleteProduct;

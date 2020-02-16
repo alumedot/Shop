@@ -28,11 +28,10 @@ function* createProduct(action: R.ICreateProduct) {
 }
 
 function* getProducts() {
-console.log('getProducts saga');
     try {
-        const { data }: AxiosResponse<FetchResult.IGetProducts> = yield call(api.getProducts);
-        console.log(data);
+        const data: AxiosResponse<FetchResult.IGetProducts> = yield call(api.getProducts);
         const loadedProducts = [];
+
         for (const key in data) {
             const {title, imageUrl, description, price} = data[key];
             loadedProducts.push(new Product(key, 'u1', title, imageUrl, description, price))
@@ -46,7 +45,7 @@ console.log('getProducts saga');
         console.log('getProducts error message', error);
         yield put<R.IGetProductsFailed>({
             type: ActionTypes.GetProductsFailed,
-            error,
+            error: error.message,
         })
     }
 }

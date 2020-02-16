@@ -10,22 +10,38 @@ import { ActionTypes } from './types/ActionTypes';
 const initialState: IReduxState = {
     availableProducts: PRODUCTS,
     userProducts: PRODUCTS.filter(product => product.ownerId === 'u1'),
+    isLoading: false,
+    error: null,
 };
 
 export default (state: IReduxState = initialState, action: IAction): IReduxState => {
     switch (action.type) {
+        case ActionTypes.GetProducts: {
+            return {
+                ...state,
+                isLoading: true,
+            }
+        }
         case ActionTypes.GetProductsSucceed: {
             return {
                 ...state,
                 availableProducts: action.products,
                 userProducts: action.products.filter(product => product.ownerId === 'u1'),
+                isLoading: false,
             };
+        }
+        case ActionTypes.GetProductsFailed: {
+            return {
+                ...state,
+                availableProducts: [],
+                isLoading: false,
+                error: action.error,
+            }
         }
         case ActionTypes.CreateProduct: {
             const {title, url, description, price} = action.productData;
             const newProduct = new Product(new Date().toString(), 'u1', title, url, description, price);
 
-            console.log();
             return {
                 ...state,
                 availableProducts: state.availableProducts.concat(newProduct),
@@ -33,7 +49,6 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
             }
         }
         case ActionTypes.CreateProductSucceed: {
-            console.log('reducer name', action.name);
             return { ...state };
         }
         case ActionTypes.UpdateProduct: {
