@@ -36,6 +36,16 @@ export interface ICreateProductFailed {
   error: AxiosError;
 }
 
+export interface IGetProductsSucceed {
+  type: ActionTypes.GetProductsSucceed;
+  products: IProduct[];
+}
+
+export interface IGetProductsFailed {
+  type: ActionTypes.GetProductsFailed;
+  error: AxiosError;
+}
+
 export interface IDeleteProduct {
   type: ActionTypes.DeleteProduct;
   id: string;
@@ -44,5 +54,6 @@ export interface IDeleteProduct {
 export type IAction =
     ICreateProduct |
     ICreateProductSucceed |
+    IGetProductsSucceed |
     IUpdateProduct |
     IDeleteProduct;

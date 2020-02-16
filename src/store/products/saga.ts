@@ -1,10 +1,12 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { AxiosResponse } from 'axios';
+import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
+
+import { Product } from 'models/product';
 
 import api from './api';
 import * as R from './types/redux';
 import * as FetchResult from './types/fetchResult';
 import { ActionTypes } from './types/ActionTypes';
-import { AxiosResponse } from 'axios';
 
 
 function* createProduct(action: R.ICreateProduct) {
@@ -17,7 +19,7 @@ function* createProduct(action: R.ICreateProduct) {
             name: data.name,
         });
     } catch (error) {
-        console.log(error);
+        console.log('createProduct error message', error);
         yield put<R.ICreateProductFailed>({
             type: ActionTypes.CreateProductFailed,
             error,
@@ -25,6 +27,31 @@ function* createProduct(action: R.ICreateProduct) {
     }
 }
 
+function* getProducts() {
+console.log('getProducts saga');
+    try {
+        const { data }: AxiosResponse<FetchResult.IGetProducts> = yield call(api.getProducts);
+        console.log(data);
+        const loadedProducts = [];
+        for (const key in data) {
+            const {title, imageUrl, description, price} = data[key];
+            loadedProducts.push(new Product(key, 'u1', title, imageUrl, description, price))
+        }
+
+        yield put<R.IGetProductsSucceed>({
+            type: ActionTypes.GetProductsSucceed,
+            products: loadedProducts,
+        })
+    } catch (error) {
+        console.log('getProducts error message', error);
+        yield put<R.IGetProductsFailed>({
+            type: ActionTypes.GetProductsFailed,
+            error,
+        })
+    }
+}
+
 export default function* watchActions() {
     yield takeLatest(ActionTypes.CreateProduct, createProduct);
+    yield takeEvery(ActionTypes.GetProducts, getProducts);
 }

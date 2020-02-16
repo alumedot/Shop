@@ -16,4 +16,8 @@ export default {
             }
         );
     },
+
+    async getProducts() {
+        return await axios.get(url + 'products.json');
+    }
 }

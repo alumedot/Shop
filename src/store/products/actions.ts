@@ -32,3 +32,7 @@ export const createProduct = (title: string, description: string, url: string, p
 export const updateProduct = (id: string, title: string, description: string, url: string) => {
     return productAction(ActionTypes.UpdateProduct, title, description, url, 0, id);
 };
+
+export const getProducts = () => {
+    return { type: ActionTypes.GetProducts };
+};
