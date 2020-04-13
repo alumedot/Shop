@@ -12,6 +12,7 @@ export interface IReduxState {
 }
 
 export interface IProductData {
+  id: string,
   title: string,
   description: string,
   url: string,
@@ -30,11 +31,25 @@ export interface IUpdateProduct extends IProductAction<ActionTypes.UpdateProduct
 
 export interface ICreateProductSucceed {
   type: ActionTypes.CreateProductSucceed;
-  name: string;
+  productData: IProductData;
 }
 
 export interface ICreateProductFailed {
   type: ActionTypes.CreateProductFailed;
+  error: AxiosError;
+}
+
+export interface IUpdateProductSucceed {
+  type: ActionTypes.UpdateProductSucceed;
+}
+
+export interface IUpdateProductFailed {
+  type: ActionTypes.UpdateProductFailed;
+  error: AxiosError;
+}
+
+export interface IDeleteProductFailed {
+  type: ActionTypes.DeleteProductFailed;
   error: AxiosError;
 }
 

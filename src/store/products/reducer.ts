@@ -39,9 +39,9 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
                 error: action.error,
             }
         }
-        case ActionTypes.CreateProduct: {
-            const {title, url, description, price} = action.productData;
-            const newProduct = new Product(new Date().toString(), 'u1', title, url, description, price);
+        case ActionTypes.CreateProductSucceed: {
+            const {id, title, url, description, price} = action.productData;
+            const newProduct = new Product(id, 'u1', title, url, description, price);
 
             return {
                 ...state,
@@ -49,9 +49,9 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
                 userProducts: state.availableProducts.concat(newProduct),
             }
         }
-        case ActionTypes.CreateProductSucceed: {
-            return { ...state };
-        }
+        // case ActionTypes.CreateProductSucceed: {
+        //     return { ...state };
+        // }
         case ActionTypes.UpdateProduct: {
             const userProductIndex = state.userProducts.findIndex(item => item.id === action.id);
             const availableProductIndex = state.availableProducts.findIndex(item => item.id === action.id);
