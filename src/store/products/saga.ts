@@ -46,7 +46,6 @@ function* updateProduct(action: R.IUpdateProduct) {
 
     yield put<R.IUpdateProductSucceed>({
       type: ActionTypes.UpdateProductSucceed,
-      // name: data.name,
     });
   } catch (error) {
     console.log('updateProduct error message', error);
@@ -60,10 +59,8 @@ function* updateProduct(action: R.IUpdateProduct) {
 function* deleteProduct(action: R.IDeleteProduct) {
   try {
     const {id} = action;
-    console.log(id);
     yield call(api.deleteProduct, id);
 
-    console.log('delete!!!');
     yield put<R.IUpdateProductSucceed>({
       type: ActionTypes.UpdateProductSucceed,
     });

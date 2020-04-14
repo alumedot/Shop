@@ -75,8 +75,11 @@ export interface IDeleteProduct {
 export type IAction =
     ICreateProduct |
     ICreateProductSucceed |
+    ICreateProductFailed |
     IGetProducts |
     IGetProductsSucceed |
     IGetProductsFailed |
     IUpdateProduct |
+    IUpdateProductSucceed |
+    IUpdateProductFailed |
     IDeleteProduct;
