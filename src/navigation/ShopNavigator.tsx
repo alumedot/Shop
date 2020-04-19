@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,81 +13,96 @@ import CartScreen from 'screens/shop/CartScreen';
 import OrdersScreen from 'screens/shop/OrdersScreen';
 import UserProductsScreen from 'screens/user/UserProductsScreen';
 import EditProductScreen from 'screens/user/EditProductScreen';
+import AuthScreen from 'screens/user/AuthScreen';
 
 import { Colors, Fonts } from 'constants';
 
 
 const defaultNavOptions = {
-    cardStyle: {
-        backgroundColor: 'white',
-    },
-    headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.Primary : '',
-    },
-    headerTitleStyle: {
-        fontFamily: Fonts.OpenSansBold,
-    },
-    headerBackTitleStyle: {
-        fontFamily: Fonts.OpenSansBold,
-    },
-    headerTintColor: Platform.OS === 'android' ? 'white' : Colors.Primary,
+  cardStyle: {
+    backgroundColor: 'white',
+  },
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.Primary : '',
+  },
+  headerTitleStyle: {
+    fontFamily: Fonts.OpenSansBold,
+  },
+  headerBackTitleStyle: {
+    fontFamily: Fonts.OpenSansBold,
+  },
+  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.Primary,
 };
 
 const navOptions = (androidIcon: string, iosIcon: string) => {
-    return {
-        drawerIcon: (drawerConfig: DrawerIconProps) => (
-            <Ionicons
-                name={Platform.OS === 'android' ? androidIcon : iosIcon}
-                size={23}
-                color={drawerConfig.tintColor}
-            />
-        ),
-    }
+  return {
+    drawerIcon: (drawerConfig: DrawerIconProps) => (
+      <Ionicons
+        name={Platform.OS === 'android' ? androidIcon : iosIcon}
+        size={23}
+        color={drawerConfig.tintColor}
+      />
+    ),
+  }
 };
 
 const ProductsNavigator = createStackNavigator(
-    {
-        ProductsOverview: ProductsOverviewScreen,
-        ProductDetail: ProductDetailScreen,
-        Cart: CartScreen,
-    },
-    {
-        navigationOptions: navOptions('md-cart', 'ios-cart'),
-        defaultNavigationOptions: defaultNavOptions,
-    });
+  {
+    ProductsOverview: ProductsOverviewScreen,
+    ProductDetail: ProductDetailScreen,
+    Cart: CartScreen,
+  },
+  {
+    navigationOptions: navOptions('md-cart', 'ios-cart'),
+    defaultNavigationOptions: defaultNavOptions,
+  });
 
 const OrdersNavigator = createStackNavigator(
-    {
-        Orders: OrdersScreen,
-    },
-    {
-        navigationOptions: navOptions('md-list', 'ios-list'),
-        defaultNavigationOptions: defaultNavOptions,
-    }
+  {
+    Orders: OrdersScreen,
+  },
+  {
+    navigationOptions: navOptions('md-list', 'ios-list'),
+    defaultNavigationOptions: defaultNavOptions,
+  }
 );
 
 const AdminNavigator = createStackNavigator(
-    {
-        UserProducts: UserProductsScreen,
-        EditProduct: EditProductScreen,
-    },
-    {
-        navigationOptions: navOptions('md-create', 'ios-create'),
-        defaultNavigationOptions: defaultNavOptions,
-    }
+  {
+    UserProducts: UserProductsScreen,
+    EditProduct: EditProductScreen,
+  },
+  {
+    navigationOptions: navOptions('md-create', 'ios-create'),
+    defaultNavigationOptions: defaultNavOptions,
+  }
 );
 
 const ShopNavigator = createDrawerNavigator(
-    {
-        Products: ProductsNavigator,
-        Orders: OrdersNavigator,
-        Admin: AdminNavigator,
+  {
+    Products: ProductsNavigator,
+    Orders: OrdersNavigator,
+    Admin: AdminNavigator,
+  },
+  {
+    contentOptions: {
+      activeTintColor: Colors.Primary,
     },
-    {
-        contentOptions: {
-            activeTintColor: Colors.Primary,
-        },
-    }
+  }
 );
 
-export default createAppContainer(ShopNavigator);
+const AuthNavigator = createStackNavigator(
+  {
+    Auth: AuthScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavOptions,
+  },
+)
+
+const MainNavigator = createSwitchNavigator({
+  Auth: AuthNavigator,
+  Shop: ShopNavigator,
+});
+
+export default createAppContainer(MainNavigator);

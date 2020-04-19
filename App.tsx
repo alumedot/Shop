@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // Redux
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -31,19 +32,23 @@ const fetchFonts = () => {
   });
 };
 
+const sagaMiddleware = createSagaMiddleware();
+const middlewares = [
+  thunkMiddleware,
+  sagaMiddleware
+];
+
 const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
   orders: ordersReducer,
 });
 
-const sagaMiddleware = createSagaMiddleware();
-
 const store = createStore(
-    rootReducer,
-    composeWithDevTools(
-        applyMiddleware(sagaMiddleware),
-    )
+  rootReducer,
+  composeWithDevTools(
+    applyMiddleware(...middlewares),
+  )
 );
 
 sagaMiddleware.run(saga);
@@ -54,7 +59,7 @@ export default function App() {
   return fontLoaded ? (
     <Provider store={store}>
       <ErrorHandler>
-        <ShopNavigator />
+        <ShopNavigator/>
       </ErrorHandler>
     </Provider>
   ) : (

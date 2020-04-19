@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 
 import { IProduct } from '../../instance';
 import { ActionTypes } from './ActionTypes';
+import { TMetaThunk } from 'src/store/types';
 
 
 export interface IReduxState {
@@ -55,16 +56,19 @@ export interface IDeleteProductFailed {
 
 export interface IGetProducts {
   type: ActionTypes.GetProducts;
+  meta: TMetaThunk;
 }
 
 export interface IGetProductsSucceed {
   type: ActionTypes.GetProductsSucceed;
   products: IProduct[];
+  meta: TMetaThunk;
 }
 
 export interface IGetProductsFailed {
   type: ActionTypes.GetProductsFailed;
   error: AxiosError;
+  meta: TMetaThunk;
 }
 
 export interface IDeleteProduct {

@@ -73,7 +73,8 @@ function* deleteProduct(action: R.IDeleteProduct) {
   }
 }
 
-function* getProducts() {
+function* getProducts(action: R.IGetProducts) {
+  const {meta} = action;
   try {
     const {data}: AxiosResponse<FetchResult.IGetProducts> = yield call(api.getProducts);
     const loadedProducts = [];
@@ -86,12 +87,14 @@ function* getProducts() {
     yield put<R.IGetProductsSucceed>({
       type: ActionTypes.GetProductsSucceed,
       products: loadedProducts,
+      meta,
     })
   } catch (error) {
     console.log('getProducts error message', error);
     yield put<R.IGetProductsFailed>({
       type: ActionTypes.GetProductsFailed,
       error: error.message,
+      meta,
     })
   }
 }

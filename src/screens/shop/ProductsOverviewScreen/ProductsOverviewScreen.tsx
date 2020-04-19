@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, Platform, ActivityIndicator, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -18,6 +18,7 @@ import { IProps } from './types';
 
 
 const ProductsOverviewScreen = (props: IProps) => {
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const products = useSelector(({products}: IRootReduxState) => products.availableProducts);
   const isLoading = useSelector(({products}: IRootReduxState) => products.isLoading);
   const dispatch = useDispatch();
@@ -46,7 +47,13 @@ const ProductsOverviewScreen = (props: IProps) => {
     )
   };
 
-  if (isLoading) {
+  const refreshProducts = async () => {
+    setIsRefreshing(true);
+    await dispatch(actionsProducts.getProducts());
+    setIsRefreshing(false);
+  }
+
+  if (isLoading && !isRefreshing) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color={Colors.Primary}/>
@@ -64,6 +71,8 @@ const ProductsOverviewScreen = (props: IProps) => {
 
   return (
     <FlatList
+      onRefresh={refreshProducts}
+      refreshing={isRefreshing}
       data={products}
       keyExtractor={item => item.id}
       renderItem={itemData => (
