@@ -10,8 +10,8 @@ import Input from 'components/UI/Input';
 import * as actionsProducts from 'store/products/actions';
 import { Colors } from 'constants';
 
-import { IProps } from './types';
-import { FormActions, IFormAction, IFormState, InputIds } from './form';
+import { FormActions, InputIds, IFormAction } from '../../types';
+import { IProps, IFormState } from './types';
 
 
 const formReducer = (state: IFormState, action: IFormAction): IFormState => {
