@@ -32,7 +32,7 @@ export interface IUpdateProduct extends IProductAction<ActionTypes.UpdateProduct
 
 export interface ICreateProductSucceed {
   type: ActionTypes.CreateProductSucceed;
-  productData: IProductData;
+  productData: IProductData & {ownerId: string};
 }
 
 export interface ICreateProductFailed {
@@ -62,6 +62,7 @@ export interface IGetProducts {
 export interface IGetProductsSucceed {
   type: ActionTypes.GetProductsSucceed;
   products: IProduct[];
+  userProducts: IProduct[];
   meta: TMetaThunk;
 }
 

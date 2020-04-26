@@ -8,4 +8,12 @@ export default {
       returnSecureToken: true,
     });
   },
+
+  async login(email: string, password: string) {
+    return await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDNj9MeduIPQU85kYJXJhSjhDGiavt2AXk', {
+      email,
+      password,
+      returnSecureToken: true,
+    });
+  },
 };

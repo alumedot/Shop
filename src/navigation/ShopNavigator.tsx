@@ -29,7 +29,7 @@ const defaultNavOptions = {
     fontFamily: Fonts.OpenSansBold,
   },
   headerBackTitleStyle: {
-    fontFamily: Fonts.OpenSansBold,
+    fontFamily: Fonts.OpenSans,
   },
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.Primary,
 };

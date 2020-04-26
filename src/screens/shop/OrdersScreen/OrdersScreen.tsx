@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlatList, ActivityIndicator, View, StyleSheet } from 'react-native';
+import { FlatList, ActivityIndicator, View, StyleSheet, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationStackScreenProps } from 'react-navigation-stack';
 
@@ -24,6 +24,14 @@ const OrderScreen = () => {
         <ActivityIndicator size="large" color={Colors.Primary} />
       </View>
     );
+  }
+
+  if (!orders.length) {
+    return (
+      <View style={styles.noOrdersContainer}>
+        <Text>No orders found, try to order some!</Text>
+      </View>
+    )
   }
 
   return (
@@ -53,6 +61,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  noOrdersContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 

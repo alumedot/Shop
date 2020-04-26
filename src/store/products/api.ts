@@ -6,13 +6,21 @@ import { ICreateProductSucceed } from './types/fetchResult';
 
 
 export default {
-  async createProduct(title: string, description: string, imageUrl: string, price: number): Promise<ICreateProductSucceed> {
-    return await axios.post(url + 'products.json',
+  async createProduct(
+    token: string,
+    ownerId: string,
+    title: string,
+    description: string,
+    imageUrl: string,
+    price: number,
+  ): Promise<ICreateProductSucceed> {
+    return await axios.post(url + 'products.json?auth=' + token,
       {
         title,
         description,
         imageUrl,
         price,
+        ownerId,
       }
     );
   },
@@ -21,15 +29,21 @@ export default {
     return await axios.get(url + 'products.json');
   },
 
-  async updateProduct(id: string, title: string, description: string, imageUrl: string) {
-    return await axios.patch(url + `products/${id}.json`, {
+  async updateProduct(
+    id: string,
+    token: string,
+    title: string,
+    description: string,
+    imageUrl: string
+  ) {
+    return await axios.patch(url + `products/${id}.json?auth=` + token, {
       title,
       description,
       imageUrl,
     })
   },
 
-  async deleteProduct(id: string) {
-    return await axios.delete(url + `products/${id}.json`);
+  async deleteProduct(id: string, token: string) {
+    return await axios.delete(url + `products/${id}.json?auth=` + token);
   }
 }

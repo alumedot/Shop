@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 
 import Order from 'models/order';
+import { authData } from '../helpers';
 import api from './api';
 import * as R from './types/redux';
 import * as FetchResult from './types/fetchResult';
@@ -11,9 +12,13 @@ import { ActionTypes } from './types/ActionTypes';
 function* addOrder(action: R.IAddOrder) {
   const date = new Date();
   try {
+
     const {items, totalAmount} = action.orderData;
+    const {token, userId} = yield select(authData);
     const {data}: AxiosResponse<FetchResult.IAddOrderSucceed> = yield call(
       api.addOrder,
+      token,
+      userId,
       items,
       totalAmount,
       date.toISOString()
@@ -37,11 +42,17 @@ function* addOrder(action: R.IAddOrder) {
 
 function* getOrders(action: R.IGetOrders) {
   try {
-    const {data}: AxiosResponse<FetchResult.IGetOrdersSucceed> = yield call(api.getOrders);
+    const {userId} = yield select(authData);
+    const {data}: AxiosResponse<FetchResult.IGetOrdersSucceed> = yield call(api.getOrders, userId);
     const loadedOrders = [];
 
     for (const key in data) {
-      loadedOrders.push(new Order(key, data[key].items, data[key].totalAmount, new Date(data[key].date)))
+      loadedOrders.push(new Order(
+        key,
+        data[key].items,
+        data[key].totalAmount,
+        new Date(data[key].date)
+      ));
     }
 
     yield put<R.IGetOrdersSucceed>({

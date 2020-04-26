@@ -1,3 +1,10 @@
+import { NavigationStackProp } from 'react-navigation-stack';
+
+
+export interface INavProps {
+  navigation: NavigationStackProp;
+}
+
 export enum FormActions {
   FormInputUpdate = 'FORM_INPUT_UPDATE',
 }
