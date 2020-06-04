@@ -11,8 +11,7 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
   switch (action.type) {
     case ActionTypes.Login:return {...state, error: null};
     case ActionTypes.LoginFailed: return {...state, error: action.error};
-    case ActionTypes.LoginSucceed:
-    case ActionTypes.SignUpSucceed: {
+    case ActionTypes.Authenticate: {
       const {token, userId} = action;
       return {
         ...state,

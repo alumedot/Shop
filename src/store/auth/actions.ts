@@ -17,3 +17,11 @@ export const login = (email: string, password: string) => {
     meta: {thunk: true},
   };
 };
+
+export const authenticate = (userId: string, token: string) => {
+  return {
+    type: ActionTypes.Authenticate,
+    userId,
+    token,
+  }
+};

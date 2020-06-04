@@ -6,4 +6,6 @@ export enum ActionTypes {
   Login = 'LOGIN',
   LoginSucceed = 'LOGIN_SUCCEED',
   LoginFailed = 'LOGIN_FAILED',
+
+  Authenticate = 'AUTHENTICATE',
 }

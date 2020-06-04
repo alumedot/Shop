@@ -1,6 +1,6 @@
 import { TextInputProps } from 'react-native';
 
-import { InputIds } from 'screens/user/EditProductScreen/form';
+import { InputIds } from 'screens/types';
 
 
 export interface IProps extends TextInputProps {

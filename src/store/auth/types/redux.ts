@@ -16,8 +16,6 @@ export interface ISignUp {
 
 export interface ISignUpSucceed {
   type: ActionTypes.SignUpSucceed,
-  email: string,
-  password: string,
   token: string,
   userId: string,
   meta: TMetaThunk,
@@ -38,8 +36,13 @@ export interface ILogin {
 
 export interface ILoginSucceed {
   type: ActionTypes.LoginSucceed,
-  email: string,
-  password: string,
+  token: string,
+  userId: string,
+  meta: TMetaThunk,
+}
+
+export interface IAuthenticate {
+  type: ActionTypes.Authenticate,
   token: string,
   userId: string,
   meta: TMetaThunk,
@@ -51,10 +54,10 @@ export interface ILoginFailed {
   meta: TMetaThunk,
 }
 
-export type IAction =
-  ILogin |
-  ILoginSucceed |
-  ILoginFailed |
-  ISignUp |
-  ISignUpSucceed |
-  ISignUpFailed;
+export type IAction = ILogin
+  | ILoginSucceed
+  | ILoginFailed
+  | ISignUp
+  | ISignUpSucceed
+  | IAuthenticate
+  | ISignUpFailed;
