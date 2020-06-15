@@ -45,6 +45,7 @@ export interface IAuthenticate {
   type: ActionTypes.Authenticate,
   token: string,
   userId: string,
+  expiryDate: number,
   meta: TMetaThunk,
 }
 
@@ -54,7 +55,12 @@ export interface ILoginFailed {
   meta: TMetaThunk,
 }
 
+export interface ILogout {
+  type: ActionTypes.Logout;
+}
+
 export type IAction = ILogin
+  | ILogout
   | ILoginSucceed
   | ILoginFailed
   | ISignUp

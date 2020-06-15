@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import * as R from './types/redux';
 import * as FetchResult from './types/fetchResult';
@@ -15,6 +15,7 @@ function* signUp(action: R.ISignUp) {
       type: ActionTypes.Authenticate,
       token: idToken,
       userId: localId,
+      expiryDate: Number(expiresIn) * 1000,
       meta,
     });
 
@@ -39,6 +40,7 @@ function* login(action: R.ILogin) {
       type: ActionTypes.Authenticate,
       token: idToken,
       userId: localId,
+      expiryDate: Number(expiresIn) * 1000,
       meta,
     });
 
@@ -55,9 +57,16 @@ function* login(action: R.ILogin) {
   }
 }
 
+function* autoLogout(action) {
+  yield delay(action.expiryDate);
+  AsyncStorage.removeItem('userData');
+  yield put({ type: ActionTypes.Logout });
+}
+
 export default function* watchActions() {
   yield takeLatest(ActionTypes.SignUp, signUp);
-  yield takeLatest(ActionTypes.Login, login)
+  yield takeLatest(ActionTypes.Login, login);
+  yield takeLatest(ActionTypes.Authenticate, autoLogout);
 }
 
 const saveDataToStorage = (token: string, userId: string, expirationDate: Date) => {

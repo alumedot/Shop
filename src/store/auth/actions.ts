@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import { ActionTypes } from './types/ActionTypes';
 
 export const signUp = (email: string, password: string) => {
@@ -18,10 +19,16 @@ export const login = (email: string, password: string) => {
   };
 };
 
-export const authenticate = (userId: string, token: string) => {
+export const authenticate = (userId: string, token: string, expiryDate: number) => {
   return {
     type: ActionTypes.Authenticate,
     userId,
     token,
+    expiryDate,
   }
+};
+
+export const logout = () => {
+  AsyncStorage.removeItem('userData');
+  return { type: ActionTypes.Logout }
 };

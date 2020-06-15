@@ -8,4 +8,6 @@ export enum ActionTypes {
   LoginFailed = 'LOGIN_FAILED',
 
   Authenticate = 'AUTHENTICATE',
+
+  Logout = 'LOGOUT',
 }

@@ -22,6 +22,7 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
     }
     case ActionTypes.SignUp: return {...state, error: null};
     case ActionTypes.SignUpFailed: return {...state, error: action.error};
+    case ActionTypes.Logout: return initialState;
     default: return state;
   }
 };
