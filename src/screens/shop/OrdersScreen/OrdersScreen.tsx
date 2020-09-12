@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { FlatList, ActivityIndicator, View, StyleSheet, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavigationStackScreenProps } from 'react-navigation-stack';
 
 import { IRootReduxState } from 'store/types';
 import HeaderButtonMenu from 'components/UI/HeaderButtonMenu';
@@ -49,7 +48,7 @@ const OrderScreen = () => {
   )
 };
 
-OrderScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: 'Your orders',
     headerLeft: () => <HeaderButtonMenu navData={navData}/>,

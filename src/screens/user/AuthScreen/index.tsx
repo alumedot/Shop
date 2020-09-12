@@ -91,7 +91,7 @@ const AuthScreen = (props: INavProps) => {
       await dispatch(actionsAuth.signUp(email, password)) :
       await dispatch(actionsAuth.login(email, password));
     setIsLoading(false);
-    !error && props.navigation.navigate('Shop');
+    // !error && props.navigation.navigate('Shop');
   }
 
   const inputChangeHandler = useCallback((inputId: InputIds, value: string, isValid: boolean) => {
@@ -160,7 +160,7 @@ const AuthScreen = (props: INavProps) => {
   )
 }
 
-AuthScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: 'Authentication',
 };
 

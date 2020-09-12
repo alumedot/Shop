@@ -1,1 +1,1 @@
-export { default } from './EditProductScreen';
+export { default, screenOptions } from './EditProductScreen';

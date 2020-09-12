@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, Platform, ActivityIndicator, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { NavigationStackScreenProps } from 'react-navigation-stack';
+import { StackNavigationProp } from '@react-navigation/stack'
 
 import { IRootReduxState } from 'store/types';
 
@@ -14,22 +14,20 @@ import HeaderButtonMenu from 'components/UI/HeaderButtonMenu';
 import * as cartActions from 'store/cart/actions';
 import * as actionsProducts from 'store/products/actions';
 
-import { IProps } from './types';
 
-
-const ProductsOverviewScreen = (props: IProps) => {
+const ProductsOverviewScreen = (props: { navigation: StackNavigationProp<any, any> }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const products = useSelector(({products}: IRootReduxState) => products.availableProducts);
   const isLoading = useSelector(({products}: IRootReduxState) => products.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const willFocusSub = props.navigation.addListener('willFocus', () => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
       dispatch(actionsProducts.getProducts());
     })
 
     return () => {
-      willFocusSub.remove();
+      unsubscribe();
     };
   }, [dispatch]);
 
@@ -98,7 +96,7 @@ const ProductsOverviewScreen = (props: IProps) => {
   )
 };
 
-ProductsOverviewScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: 'All Products',
     headerLeft: () => <HeaderButtonMenu navData={navData}/>,

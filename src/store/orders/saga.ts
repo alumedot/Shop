@@ -2,6 +2,8 @@ import { AxiosResponse } from 'axios';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 
 import Order from 'models/order';
+import { IOrder } from 'store/orders/types/instance';
+
 import { authData } from '../helpers';
 import api from './api';
 import * as R from './types/redux';
@@ -44,7 +46,7 @@ function* getOrders(action: R.IGetOrders) {
   try {
     const {userId} = yield select(authData);
     const {data}: AxiosResponse<FetchResult.IGetOrdersSucceed> = yield call(api.getOrders, userId);
-    const loadedOrders = [];
+    const loadedOrders: IOrder[] = [];
 
     for (const key in data) {
       loadedOrders.push(new Order(

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { View, ActivityIndicator, StyleSheet, AsyncStorage } from 'react-native';
 import { Colors } from 'constants';
 import { INavProps } from './types';
-import { authenticate } from 'store/auth/actions';
+import { authenticate, setDidTryAL } from 'store/auth/actions';
 
 const StartupScreen = (props: INavProps) => {
   const dispatch = useDispatch();
@@ -12,7 +12,8 @@ const StartupScreen = (props: INavProps) => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem('userData');
       if (!userData) {
-        props.navigation.navigate('Auth');
+        dispatch(setDidTryAL());
+        // props.navigation.navigate('Auth');
         return;
       }
       const transformedData = JSON.parse(userData as string);
@@ -20,13 +21,14 @@ const StartupScreen = (props: INavProps) => {
       const expirationDate = new Date(expiryDate);
 
       if (expirationDate <= new Date() || !token || !userId) {
-        props.navigation.navigate('Auth');
+        dispatch(setDidTryAL());
+        // props.navigation.navigate('Auth');
         return;
       }
 
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
-      props.navigation.navigate('Shop');
+      // props.navigation.navigate('Shop');
       dispatch(authenticate(userId, token, expirationTime))
     };
     tryLogin();

@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, ScrollView, StyleSheet, View, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
-import { NavigationStackScreenProps } from 'react-navigation-stack';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { IRootReduxState } from 'store/types';
 import HeaderButtonBase from 'components/UI/HeaderButtonBase';
 import Input from 'components/UI/Input';
-
 import * as actionsProducts from 'store/products/actions';
+
 import { Colors } from 'constants';
 
-import { FormActions, InputIds, IFormAction } from '../../types';
-import { IProps, IFormState } from './types';
+import { FormActions, InputIds, IFormAction, RootStackNavigatorProps } from '../../types';
+import { IFormState } from './types';
 
 
 const formReducer = (state: IFormState, action: IFormAction): IFormState => {
@@ -41,9 +42,16 @@ const formReducer = (state: IFormState, action: IFormAction): IFormState => {
   }
 };
 
-const EditProductScreen = (props: IProps) => {
+type EditProductScreenNavigationProp = StackNavigationProp<RootStackNavigatorProps, 'EditProduct'>
+
+type EditProductProps = {
+  route: RouteProp<RootStackNavigatorProps, 'EditProduct'>;
+  navigation: EditProductScreenNavigationProp;
+}
+
+const EditProductScreen = (props: EditProductProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const prodId = props.navigation.getParam('productId');
+  const prodId = props.route.params?.productId;
   const isLoading = useSelector((state: IRootReduxState) => state.products.isLoading);
   const error = useSelector((state: IRootReduxState) => state.products.error);
   const editedProduct = useSelector(({products}: IRootReduxState) => {
@@ -92,7 +100,16 @@ const EditProductScreen = (props: IProps) => {
   }, [dispatch, prodId, formState, isLoading, error]);
 
   useEffect(() => {
-    props.navigation.setParams({submit: submitHandler});
+    props.navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtonBase
+          title="Save"
+          iconIos="ios-checkmark"
+          iconAndroid="md-checkmark"
+          onPress={submitHandler}
+        />
+      ),
+    });
   }, [submitHandler]);
 
   useEffect(() => {
@@ -184,19 +201,10 @@ const EditProductScreen = (props: IProps) => {
   )
 };
 
-EditProductScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
-  const submitHandler = navData.navigation.getParam('submit');
+export const screenOptions = (navData) => {
   return {
-    headerTitle: navData.navigation.getParam('productId') ?
+    headerTitle: navData.route.params?.productId ?
       'Edit product' : 'Add product',
-    headerRight: () => (
-      <HeaderButtonBase
-        title="Save"
-        iconIos="ios-checkmark"
-        iconAndroid="md-checkmark"
-        onPress={submitHandler}
-      />
-    ),
   }
 };
 

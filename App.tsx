@@ -21,7 +21,7 @@ import ordersReducer from './src/store/orders/reducer';
 import authReducer from './src/store/auth/reducer';
 
 // Navigator
-import NavigationContainer from './src/navigation/NavigationContainer';
+import AppNavigator from './src/navigation/AppNavigator';
 
 // Saga
 import saga from './src/store/rootSaga';
@@ -63,7 +63,7 @@ export default function App() {
   return fontLoaded ? (
     <Provider store={store}>
       <ErrorHandler>
-        <NavigationContainer />
+        <AppNavigator />
       </ErrorHandler>
     </Provider>
   ) : (

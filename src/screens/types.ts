@@ -2,7 +2,15 @@ import { NavigationStackProp } from 'react-navigation-stack';
 
 
 export interface INavProps {
-  navigation: NavigationStackProp;
+  navigation?: NavigationStackProp;
+}
+
+export type RootStackNavigatorProps = {
+  EditProduct: { productId: string };
+  ProductDetail: {
+    productTitle: string,
+    productId: string,
+  };
 }
 
 export enum FormActions {

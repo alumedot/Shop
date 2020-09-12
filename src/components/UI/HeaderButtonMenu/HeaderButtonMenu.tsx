@@ -4,19 +4,16 @@ import { Platform } from 'react-native';
 
 import HeaderButton from 'components/UI/HeaderButton';
 
-import { IProps } from './types';
-
-
-const HeaderButtonMenu = (props: IProps) => {
-    return (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item
-                title="Menu"
-                iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-                onPress={() => props.navData.navigation.toggleDrawer()}
-            />
-        </HeaderButtons>
-    )
+const HeaderButtonMenu = (props) => {
+  return (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title="Menu"
+        iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+        onPress={() => props.navData.navigation.toggleDrawer()}
+      />
+    </HeaderButtons>
+  )
 };
 
 export default HeaderButtonMenu;

@@ -28,6 +28,10 @@ export const authenticate = (userId: string, token: string, expiryDate: number) 
   }
 };
 
+export const setDidTryAL = () => {
+  return { type: ActionTypes.SetDidTryAL };
+}
+
 export const logout = () => {
   AsyncStorage.removeItem('userData');
   return { type: ActionTypes.Logout }

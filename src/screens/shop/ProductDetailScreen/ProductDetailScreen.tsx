@@ -1,20 +1,25 @@
 import React from 'react';
 import { ScrollView, View, Image, Button, Text, StyleSheet } from 'react-native';
-import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 
 import { IRootReduxState } from 'store/types';
 import * as cartActions from 'store/cart/actions';
 
 import { Colors, Fonts } from 'constants';
 
-import { IParams } from './types';
-import { NavigationInjectedProps } from 'react-navigation';
+import { RootStackNavigatorProps } from 'src/screens/types';
 
+type EditProductScreenNavigationProp = StackNavigationProp<RootStackNavigatorProps, 'ProductDetail'>
 
-const ProductDetailScreen = (props: NavigationInjectedProps<IParams>) => {
-  const productId = props.navigation.getParam('productId');
+type ProductDetailProps = {
+  route: RouteProp<RootStackNavigatorProps, 'ProductDetail'>;
+  navigation: EditProductScreenNavigationProp;
+}
+
+const ProductDetailScreen = (props: ProductDetailProps) => {
+  const productId = props.route.params.productId;
   const selectedProduct = useSelector(
     ({products}: IRootReduxState) => products.availableProducts
       .find(product => product.id === productId)
@@ -41,9 +46,9 @@ const ProductDetailScreen = (props: NavigationInjectedProps<IParams>) => {
   );
 };
 
-ProductDetailScreen.navigationOptions = (navData: NavigationStackScreenProps<Partial<IParams>>) => {
+export const screenOptions = (navData) => {
   return {
-    headerTitle: navData.navigation.getParam('productTitle'),
+    headerTitle: navData.route.params.productTitle,
   };
 };
 

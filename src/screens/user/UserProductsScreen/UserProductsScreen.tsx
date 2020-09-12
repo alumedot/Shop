@@ -1,7 +1,6 @@
 import React from 'react';
 import { Alert, Button, FlatList, Text, View, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavigationStackScreenProps } from 'react-navigation-stack';
 
 import { IRootReduxState } from 'store/types';
 import ProductItem from 'components/shop/ProductItem';
@@ -68,7 +67,7 @@ const UserProductsScreen = (props: IProps) => {
   )
 };
 
-UserProductsScreen.navigationOptions = (navData: NavigationStackScreenProps) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: 'Your products',
     headerLeft: () => <HeaderButtonMenu navData={navData}/>,

@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { call, put, takeLatest, takeEvery, select } from 'redux-saga/effects';
 
 import { Product } from 'models/product';
+import { IProduct } from 'store/instance';
 
 import { authData } from '../helpers';
 import api from './api';
@@ -92,7 +93,7 @@ function* getProducts(action: R.IGetProducts) {
   const {userId} = yield select(authData);
   try {
     const {data}: AxiosResponse<FetchResult.IGetProducts> = yield call(api.getProducts);
-    const loadedProducts = [];
+    const loadedProducts: IProduct[] = [];
 
     for (const key in data) {
       const {ownerId, title, imageUrl, description, price} = data[key];

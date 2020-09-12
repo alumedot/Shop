@@ -1,1 +1,1 @@
-export { default } from './CartScreen';
+export { default, screenOptions } from './CartScreen';

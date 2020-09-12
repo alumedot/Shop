@@ -9,5 +9,7 @@ export enum ActionTypes {
 
   Authenticate = 'AUTHENTICATE',
 
+  SetDidTryAL = 'SET_DID_TRY_AL',
+
   Logout = 'LOGOUT',
 }

@@ -2,9 +2,10 @@ import { TMetaThunk } from 'store/types';
 import { ActionTypes } from './ActionTypes';
 
 export interface IReduxState {
-  error: string | null;
   token: string | null;
+  didTryAutoLogin: boolean;
   userId: string | null;
+  error: string | null;
 }
 
 export interface ISignUp {
@@ -55,6 +56,10 @@ export interface ILoginFailed {
   meta: TMetaThunk,
 }
 
+export interface ISetDidTryAL {
+  type: ActionTypes.SetDidTryAL;
+}
+
 export interface ILogout {
   type: ActionTypes.Logout;
 }
@@ -66,4 +71,5 @@ export type IAction = ILogin
   | ISignUp
   | ISignUpSucceed
   | IAuthenticate
+  | ISetDidTryAL
   | ISignUpFailed;

@@ -11,13 +11,13 @@ import * as actionsCart from 'store/cart/actions';
 import * as actionsOrders from 'store/orders/actions';
 
 import CartItem from 'components/shop/CartItem';
-
+import { IOrderItem } from 'store/orders/types/instance';
 
 const CartScreen = () => {
   const cartTotalAmount = useSelector(({cart}: IRootReduxState) => cart.totalAmount);
   const loading = useSelector(({orders}: IRootReduxState) => orders.loading);
   const cartItems = useSelector(({cart}: IRootReduxState) => {
-    const transformedCartItems = [];
+    const transformedCartItems: IOrderItem[] = [];
     for (const key in cart.items) {
       transformedCartItems.push({
         id: key,
@@ -69,7 +69,7 @@ const CartScreen = () => {
   )
 };
 
-CartScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: 'Your cart',
 };
 
