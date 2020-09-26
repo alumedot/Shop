@@ -13,11 +13,12 @@ export interface IReduxState {
 }
 
 export interface IProductData {
-  id: string,
-  title: string,
-  description: string,
-  url: string,
-  price: number,
+  id: string;
+  ownerPushToken: string;
+  title: string;
+  description: string;
+  url: string;
+  price: number;
 }
 
 export interface IProductAction<Type extends ActionTypes> {

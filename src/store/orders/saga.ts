@@ -33,6 +33,24 @@ function* addOrder(action: R.IAddOrder) {
       totalAmount,
       date,
     });
+
+    for (const item of items) {
+      const { ownerPushToken } = item;
+
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Accept-Encoding': 'gzip, deflate',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: ownerPushToken,
+          title: 'Order was placed!',
+          body: item.title,
+        }),
+      });
+    }
   } catch (error) {
     console.log('addOrder error message', error);
     yield put<R.IAddOrderFailed>({

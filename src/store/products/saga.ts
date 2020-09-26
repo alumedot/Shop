@@ -13,7 +13,7 @@ import { ActionTypes } from './types/ActionTypes';
 
 function* createProduct(action: R.ICreateProduct) {
   try {
-    const {title, description, url, price} = action.productData;
+    const {title, description, url, price, ownerPushToken} = action.productData;
     const {token, userId} = yield select(authData);
     const {data}: AxiosResponse<FetchResult.ICreateProductSucceed> = yield call(
       api.createProduct,
@@ -34,6 +34,7 @@ function* createProduct(action: R.ICreateProduct) {
         price,
         url,
         ownerId: userId,
+        ownerPushToken,
       },
     });
   } catch (error) {
@@ -96,8 +97,8 @@ function* getProducts(action: R.IGetProducts) {
     const loadedProducts: IProduct[] = [];
 
     for (const key in data) {
-      const {ownerId, title, imageUrl, description, price} = data[key];
-      loadedProducts.push(new Product(key, ownerId, title, imageUrl, description, price))
+      const {ownerId, title, imageUrl, description, price, ownerPushToken} = data[key];
+      loadedProducts.push(new Product(key, ownerId, ownerPushToken, title, imageUrl, description, price))
     }
 
     yield put<R.IGetProductsSucceed>({

@@ -16,7 +16,7 @@ const initialState: IReduxState = {
 export default (state: IReduxState = initialState, action: IAction): IReduxState => {
   switch (action.type) {
     case ActionTypes.AddToCart: {
-      const {id, price, title} = action.product;
+      const {id, price, title, ownerPushToken} = action.product;
 
       return {
         ...state,
@@ -27,9 +27,10 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
               state.items[id].quantity + 1,
               price,
               title,
+              ownerPushToken,
               state.items[id].sum + price,
             ) :
-            new CartItem(1, price, title, price),
+            new CartItem(1, price, title, ownerPushToken, price),
         },
         totalAmount: state.totalAmount + price,
       };
@@ -40,8 +41,8 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
       let updatedCartItems;
 
       if (currentQuantity > 1) {
-        const {quantity, price, title, sum} = selectedCartItem;
-        const updatedCartItem = new CartItem(quantity - 1, price, title, sum - price);
+        const {quantity, price, title, sum, ownerPushToken} = selectedCartItem;
+        const updatedCartItem = new CartItem(quantity - 1, price, title, ownerPushToken, sum - price);
         updatedCartItems = {...state.items, [action.id]: updatedCartItem};
       } else {
         updatedCartItems = {...state.items};

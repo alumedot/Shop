@@ -43,8 +43,8 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
       return {...state, isLoading: true};
     }
     case ActionTypes.CreateProductSucceed: {
-      const {id, title, url, description, price, ownerId} = action.productData;
-      const newProduct = new Product(id, ownerId, title, url, description, price);
+      const {id, title, url, description, price, ownerId, ownerPushToken} = action.productData;
+      const newProduct = new Product(id, ownerId, ownerPushToken, title, url, description, price);
 
       return {
         ...state,
@@ -65,6 +65,7 @@ export default (state: IReduxState = initialState, action: IAction): IReduxState
       const updatedProduct = new Product(
         action.id,
         state.userProducts[userProductIndex].ownerId,
+        state.userProducts[userProductIndex].ownerPushToken,
         title,
         url,
         description,

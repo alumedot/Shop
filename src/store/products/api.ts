@@ -1,4 +1,6 @@
 import axios from 'axios';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 
 import { url } from 'config';
 
@@ -14,6 +16,16 @@ export default {
     imageUrl: string,
     price: number,
   ): Promise<ICreateProductSucceed> {
+    let pushToken;
+    let statusObj = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (statusObj.status !== 'granted') {
+      statusObj = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    }
+    if (statusObj.status !== 'granted') {
+      pushToken = null
+    } else {
+      pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+    }
     return await axios.post(url + 'products.json?auth=' + token,
       {
         title,
@@ -21,6 +33,7 @@ export default {
         imageUrl,
         price,
         ownerId,
+        ownerPushToken: pushToken,
       }
     );
   },

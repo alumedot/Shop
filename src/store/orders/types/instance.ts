@@ -1,6 +1,7 @@
 export interface IOrderItem {
     id: string;
     title: string;
+    ownerPushToken: string;
     price: number;
     quantity: number;
     sum: number;

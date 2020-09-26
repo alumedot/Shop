@@ -11,6 +11,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 // Expo
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
+import * as Notifications from 'expo-notifications';
 
 import ErrorHandler from './src/components/helpers/ErrorHandler';
 
@@ -56,6 +57,16 @@ const store = createStore(
 );
 
 sagaMiddleware.run(saga);
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true,
+      shouldSetBadge: false,
+      shouldPlaySound: false,
+    };
+  },
+});
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);

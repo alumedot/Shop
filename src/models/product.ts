@@ -1,6 +1,7 @@
 export class Product {
   id: string;
   ownerId: string;
+  ownerPushToken: string;
   imageUrl: string;
   title: string;
   description: string;
@@ -9,6 +10,7 @@ export class Product {
   constructor(
     id: string,
     ownerId: string,
+    ownerPushToken: string,
     title: string,
     imageUrl: string,
     description: string,
@@ -16,6 +18,7 @@ export class Product {
   ) {
     this.id = id;
     this.ownerId = ownerId;
+    this.ownerPushToken = ownerPushToken;
     this.imageUrl = imageUrl;
     this.title = title;
     this.description = description;

@@ -7,6 +7,7 @@ export interface IReduxState {
     [key: string]: {
       quantity: number,
       title: string,
+      ownerPushToken: string,
       price: number,
       sum: number,
     }
